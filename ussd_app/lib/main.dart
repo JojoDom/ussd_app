@@ -69,27 +69,27 @@ class _MyUSSDServiceState extends State<MyUSSDService> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
               child: ElevatedButton(
-                onPressed: isLoading ? null : () async {
+                onPressed: isLoadingMulti ? null : () async {
                   Logger().i(controller.text);
                   setState(() {
-                    isLoading = true;
+                    isLoadingMulti = true;
                     multiSessionResponse = '';
                   });
                   try {
-                    final result = await platform.invokeMethod('sendUssd', {'ussdCode': controller.text});
+                    final result = await platform.invokeMethod('multisessionUssd', {'ussdCode': controller.text});
                     setState(() {
                       multiSessionResponse = result;
-                      isLoading = false;
+                      isLoadingMulti = false;
                       sessions.add(USSDSession(controller.text, result));
                     });
                   } on PlatformException catch (e) {
                     setState(() {
                       multiSessionResponse = e.message ?? 'Unknown error occurred';
-                      isLoading = false;
+                      isLoadingMulti = false;
                     });
                   }
                 },
-                child: isLoading 
+                child: isLoadingMulti 
                   ? const CircularProgressIndicator()
                   : const Text('Multisession', style: TextStyle(color: Colors.black)),
               ),

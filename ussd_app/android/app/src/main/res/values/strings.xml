@@ -1,0 +1,5 @@
+<resources>
+    <string name="accessibility_service_description">
+        Enable permissions to use USSD displays</string>
+
+</resources>
